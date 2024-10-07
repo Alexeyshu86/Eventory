@@ -60,7 +60,6 @@ urlpatterns = [
 python manage.py makemigrations your_app_name
 python manage.py migrate
 ```
-
 - Другие настройки (опционально):
   - Если необходимо, добавьте настройки для приложения в `settings.py`.
   - Зарегистрируйте модели в `admin.py`, если хотите управлять ими через административную панель: 
@@ -70,4 +69,5 @@ from .models import YourModel
 
 admin.site.register(YourModel)
 ```
+
 
