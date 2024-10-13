@@ -8,3 +8,8 @@ class CustomUser(AbstractUser):
         return self.email
 
 
+class Interest(models.Model):
+    interest = models.CharField(max_length=25)
+
+    def __str__(self):
+        return self.interest

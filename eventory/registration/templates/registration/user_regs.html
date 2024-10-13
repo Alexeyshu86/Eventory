@@ -29,14 +29,17 @@
             <div class="dropdown">
                 <div class="selected-items"><label for="tags">Мои интересы</label></div>
                 <div class="dropdown-content">
-                    <label><input type="checkbox" name="tags[]" value="IT">IT</label>
-                    <label><input type="checkbox" name="tags[]" value="Auto">Auto</label>
-                    <label><input type="checkbox" name="tags[]" value="Sport">Sport</label>
-                    <label><input type="checkbox" name="tags[]" value="Business">Business</label>
+                    {% for interest in interest_list %}
+                        <label><input type="checkbox" name="tags[]" value="{{ interest }}">{{ interest }}</label>
+<!--                    <label><input type="checkbox" name="tags[]" value="IT">IT</label>-->
+<!--                    <label><input type="checkbox" name="tags[]" value="Auto">Auto</label>-->
+<!--                    <label><input type="checkbox" name="tags[]" value="Sport">Sport</label>-->
+<!--                    <label><input type="checkbox" name="tags[]" value="Business">Business</label>-->
+                    {% endfor %}
                 </div>
             </div>
 
-        <button type="submit" class="btn_register">Зарегистрироваться</button>
+            <button type="submit" class="btn_register">Зарегистрироваться</button>
     </form>
     <a href="{% url 'home' %}"><button type="submit" class="btn">На главную</button></a>
 

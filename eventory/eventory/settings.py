@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'eventory.wsgi.application'
 #         'ENGINE': 'django.db.backends.postgresql',
 #         'NAME': 'eventory',
 #         'USER': 'user',
-#         'PASSWORD': '12345',
+#         'PASSWORD': 'password',
 #         'HOST': 'localhost',
 #         'PORT': '5432'
 #     }
