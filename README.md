@@ -70,4 +70,6 @@ from .models import YourModel
 admin.site.register(YourModel)
 ```
 
+docker run -e POSTGRES_USER=user -e POSTGRES_PASSWORD=password -p 5432:5432 -v /Users/bainesme/Documents/Eventory/eventory/db:/var/lib/postgresql/data --name eventory postgres
+
 
