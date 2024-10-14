@@ -6,42 +6,49 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'my_calendar/css/my_calendar.css' %}">
 
-    <table>
+    <table id="mainTable">
         <tr>
             {% for month, details in events.items %}
             <th>{{ month }}</th>
             {% endfor %}
         </tr>
         <tr>
-            {% for month, details in events.items %}
-            <td>
-                <div class="event-card">
-                    <div class="event-name">{{ details.name }}</div>
-                    <div class="event-interest">{{ details.interest }}</div>
-                    <div class="event-organizer">организатор: {{ details.organizer }}</div>
-                    <div class="event-details"> <!-- Контейнер для даты и времени -->
-                        <div class="event-date">{{ details.date }}</div>
-                        <div class="event-time">{{ details.time }}</div>
-                    </div>
-<!--                    <div class="event-subscribe">{{ details.subscribe }}</div>-->
-<!--                    <button class="event-subscribe">{{ details.subscribe }}</button> &lt;!&ndash; Кнопка для подписки &ndash;&gt;-->
-<!--                    <button id="event-subscribe" class="event-subscribe" data-subscribed="{{ details.subscribe }}">{{ details.subscribe }}</button> &lt;!&ndash; Кнопка для подписки &ndash;&gt;-->
-                    <button id="event-subscribe"
-                            class="event-subscribe {% if details.subscribe %}unsubscribed{% else %}subscribed{% endif %}"
-                            data-subscribed="{{ details.subscribe }}">
-                        {% if details.subscribe %}
-                            Отписаться
-                        {% else %}
-                            Подписаться
-                        {% endif %}
-                    </button>
-                </div>
-            </td>
+            {% for month, events_list in events.items %}
+            <th>
+
+                {% for event in events_list %}
+                        <div class="event-card">
+                            <div class="event-name">{{ event.name }}</div>
+                            <div class="event-interest">{{ event.interest }}</div>
+                            <div class="event-organizer">организатор: {{ event.organizer }}</div>
+                            <div class="event-details"> <!-- Контейнер для даты и времени -->
+                                <div class="event-date">{{ event.date }}</div>
+                                <div class="event-time">{{ event.time }}</div>
+                            </div>
+                            <button id="event-subscribe"
+                                    class="event-subscribe {% if details.subscribe %}unsubscribed{% else %}subscribed{% endif %}"
+                                    data-subscribed="{{ event.subscribe }}">
+                                {% if event.subscribe %}
+                                    Отписаться
+                                {% else %}
+                                    Подписаться
+                                {% endif %}
+                            </button>
+                        </div>
+
+                {% endfor %}
+            </th>
             {% endfor %}
         </tr>
-    </table>
+        <tr>
 
+        </tr>
+    </table>
     <script>
+        if (window.innerWidth <= 400) {
+            location.href = "#mainTable";
+        }
+
         // Получаем значение подписки из Django шаблона
         let isSubscribed = {{ details.subscribe|lower }}; // Преобразуем в lowercase для JavaScript (True/False в виде строки)
 <!--        isSubscribed = false;-->
@@ -78,5 +85,16 @@
                 isSubscribed = 'true'; // Обновляем состояние подписки
             }
         });
+
+        html {
+            scroll-behavior: smooth; /* Плавная прокрутка при переходе по якорям */
+        }
+        window.onload = function() {
+            window.scrollTo(0, 0); // Прокрутка в начало страницы
+        };
+
+        window.onresize = function() {
+            window.scrollTo(0, 0); // Прокрутка в начало страницы при изменении размера
+        };
     </script>
 {% endblock %}
