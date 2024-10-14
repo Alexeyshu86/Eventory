@@ -1,0 +1,82 @@
+{% extends 'my_calendar/shablon.html' %}
+
+{% block content %}
+    <h1>Календарь событий</h1>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'my_calendar/css/my_calendar.css' %}">
+
+    <table>
+        <tr>
+            {% for month, details in events.items %}
+            <th>{{ month }}</th>
+            {% endfor %}
+        </tr>
+        <tr>
+            {% for month, details in events.items %}
+            <td>
+                <div class="event-card">
+                    <div class="event-name">{{ details.name }}</div>
+                    <div class="event-interest">{{ details.interest }}</div>
+                    <div class="event-organizer">организатор: {{ details.organizer }}</div>
+                    <div class="event-details"> <!-- Контейнер для даты и времени -->
+                        <div class="event-date">{{ details.date }}</div>
+                        <div class="event-time">{{ details.time }}</div>
+                    </div>
+<!--                    <div class="event-subscribe">{{ details.subscribe }}</div>-->
+<!--                    <button class="event-subscribe">{{ details.subscribe }}</button> &lt;!&ndash; Кнопка для подписки &ndash;&gt;-->
+<!--                    <button id="event-subscribe" class="event-subscribe" data-subscribed="{{ details.subscribe }}">{{ details.subscribe }}</button> &lt;!&ndash; Кнопка для подписки &ndash;&gt;-->
+                    <button id="event-subscribe"
+                            class="event-subscribe {% if details.subscribe %}unsubscribed{% else %}subscribed{% endif %}"
+                            data-subscribed="{{ details.subscribe }}">
+                        {% if details.subscribe %}
+                            Отписаться
+                        {% else %}
+                            Подписаться
+                        {% endif %}
+                    </button>
+                </div>
+            </td>
+            {% endfor %}
+        </tr>
+    </table>
+
+    <script>
+        // Получаем значение подписки из Django шаблона
+        let isSubscribed = {{ details.subscribe|lower }}; // Преобразуем в lowercase для JavaScript (True/False в виде строки)
+<!--        isSubscribed = false;-->
+        const subscribeButton = document.getElementById('event-subscribe');
+
+        // Устанавливаем стиль и текст кнопки в зависимости от значения isSubscribed
+        if (isSubscribed === 'true') {
+            subscribeButton.classList.add('unsubscribed');
+            subscribeButton.classList.remove('subscribed');
+            subscribeButton.textContent = 'Отписаться';
+        } else {
+            subscribeButton.classList.add('subscribed');
+            subscribeButton.classList.remove('unsubscribed');
+            subscribeButton.textContent = 'Подписаться';
+        }
+
+        // Обработчик клика для кнопки
+        subscribeButton.addEventListener('click', function() {
+            if (isSubscribed === 'true') {
+                // Логика для отписки
+                console.log('Вы отписались от мероприятия.');
+                // Здесь можно также обновить состояние на сервере
+                subscribeButton.textContent = 'Подписаться';
+                subscribeButton.classList.remove('unsubscribed');
+                subscribeButton.classList.add('subscribed');
+                isSubscribed = 'false'; // Обновляем состояние подписки
+            } else {
+                // Логика для подписки
+                console.log('Вы подписались на мероприятие.');
+                // Здесь можно также обновить состояние на сервере
+                subscribeButton.textContent = 'Отписаться';
+                subscribeButton.classList.remove('subscribed');
+                subscribeButton.classList.add('unsubscribed');
+                isSubscribed = 'true'; // Обновляем состояние подписки
+            }
+        });
+    </script>
+{% endblock %}

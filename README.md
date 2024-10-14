@@ -70,6 +70,36 @@ from .models import YourModel
 admin.site.register(YourModel)
 ```
 
+### Cоздание докер контейнера с postgres
+```commandline
 docker run -e POSTGRES_USER=user -e POSTGRES_PASSWORD=password -p 5432:5432 -v /Users/bainesme/Documents/Eventory/eventory/db:/var/lib/postgresql/data --name eventory postgres
+```
+- запустить запустить контейнер
+- замапить папки
+```commandline
+Откройте настройки Docker:
+
+Кликните по значку Docker в меню (в верхней части экрана) и выберите "Preferences" (Настройки).
+Перейдите в раздел "Resources":
+
+Найдите вкладку "Resources" (Ресурсы) в левой колонке.
+Настройка файлового обмена:
+
+Выберите "File Sharing" (Обмен файлами). Здесь вам нужно добавить путь:
+bash
+Копировать код
+/opt/goinfre/doduofor/pythonWebSait/Eventory/eventory/db
+Если это не сработает, попробуйте добавить родительский каталог:
+bash
+Копировать код
+/opt/goinfre/doduofor/pythonWebSait/Eventory/eventory/
+Примените изменения:
+
+Нажмите "Apply & Restart" (Применить и перезапустить), чтобы изменения вступили в силу.
+Запустите контейнер снова:
+
+После перезапуска Docker попробуйте снова выполнить команду, чтобы запустить контейнер.
+```
+
 
 
