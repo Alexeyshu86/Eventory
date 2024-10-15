@@ -19,6 +19,11 @@
 
             <label for="email">Почта:</label>
             <input type="email" id="email" name="email" required>
+            {% if error_email %}
+                <div class="error-message" style="color: red;">
+                    {{ error_email }}
+                </div>
+            {% endif %}
 
             <label for="password">Пароль:</label>
             <input type="password" id="password" name="password" required>
@@ -31,10 +36,6 @@
                 <div class="dropdown-content">
                     {% for interest in interest_list %}
                         <label><input type="checkbox" name="tags[]" value="{{ interest }}">{{ interest }}</label>
-<!--                    <label><input type="checkbox" name="tags[]" value="IT">IT</label>-->
-<!--                    <label><input type="checkbox" name="tags[]" value="Auto">Auto</label>-->
-<!--                    <label><input type="checkbox" name="tags[]" value="Sport">Sport</label>-->
-<!--                    <label><input type="checkbox" name="tags[]" value="Business">Business</label>-->
                     {% endfor %}
                 </div>
             </div>
