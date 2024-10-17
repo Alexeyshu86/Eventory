@@ -1,0 +1,8 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}Registration successful{% endblock %}
+
+{% block content %}
+    <h1>Спасибо за регистрацию.</h1>
+    <a href="{% url 'home' %}"><button type="submit" class="btn">На главную</button></a>
+{% endblock %}
