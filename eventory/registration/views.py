@@ -31,5 +31,11 @@ def user_registration(request):
         return render(request, 'registration/user_regs.html',
                       {'interest_list': interest_list, 'error_passw_repeat': error_passw_repeat})
 
+
 def succ_reg(request):
     return render(request, 'registration/succ_reg.html')
+
+
+def event_registration(request):
+    interest_list = Interest.objects.all()
+    return render(request, 'registration/event_regs.html', {'interest_list': interest_list})
