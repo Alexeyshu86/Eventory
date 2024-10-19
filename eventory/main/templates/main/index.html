@@ -13,7 +13,7 @@
         <input type="password" id="password" name="password" required><br><br>
 
         <button type="submit">Вход</button>
-        <p class="registr"><a href="">Зарегистрироваться</a></p>
+        <p class="registr"><a href="{% url 'user_registration' %}">Зарегистрироваться</a></p>
     </form>
     <a href="{% url 'about' %}"><button type="submit" class="btn">О нас</button></a>
 

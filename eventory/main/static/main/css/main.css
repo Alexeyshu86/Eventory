@@ -35,13 +35,21 @@ h1 {
 }
 
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+input[type="password_repeat"],
+input[type="tel"],
+input[type="email"]{
     width: 100%;
     padding: 10px;
     margin: 8px 0;
     border: 1px solid #ccc;
     border-radius: 20px;
     box-sizing: border-box;
+    text-align: center;
+}
+
+.checkbox-container {
+    margin-top: 10px;
 }
 
 button {
@@ -61,6 +69,10 @@ button {
     padding: 10px 20px;
     color: white;
     background-color: #007BFF;
+}
+
+.btn_register {
+    margin-top: 30px;
 }
 
 button:hover {
@@ -117,6 +129,10 @@ p a:hover {
     margin: 10px 0; /* Отступы для элементов списка */
 }
 
+.registrationForm {
+    margin-top: 150px;
+}
+
 /* Медиа-запросы для мобильных устройств */
 @media (max-width: 600px) {
     h1 {
@@ -159,3 +175,4 @@ p a:hover {
         margin-top: auto; /* Отодвигаем кнопку вниз */
     }
 }
+
