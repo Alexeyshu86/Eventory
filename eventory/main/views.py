@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Interest
+# from .models import Interest
 
 
 def index(request):

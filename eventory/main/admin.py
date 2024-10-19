@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import Interest
+# from .models import Interest
 
 
-admin.site.register(Interest)
+# admin.site.register(Interest)
 
 

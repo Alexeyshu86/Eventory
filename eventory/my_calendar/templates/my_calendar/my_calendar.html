@@ -18,22 +18,25 @@
 
                 {% for event in events_list %}
                         <div class="event-card">
-                            <div class="event-name">{{ event.name }}</div>
+                            <div class="event-name">{{ event.title }}</div>
                             <div class="event-interest">{{ event.interest }}</div>
                             <div class="event-organizer">организатор: {{ event.organizer }}</div>
                             <div class="event-details"> <!-- Контейнер для даты и времени -->
                                 <div class="event-date">{{ event.date }}</div>
                                 <div class="event-time">{{ event.time }}</div>
                             </div>
-                            <button id="event-subscribe"
-                                    class="event-subscribe {% if details.subscribe %}unsubscribed{% else %}subscribed{% endif %}"
-                                    data-subscribed="{{ event.subscribe }}">
+                            {% csrf_token %}
+                            <button class="event-subscribe {% if event.subscribe %}unsubscribed{% else %}subscribed{% endif %}"
+                                    data-event-id="{{ event.event_id }}"
+                                    data-subscribed="{{ event.subscribe }}"
+                                    onclick="toggleSubscription(this)">
                                 {% if event.subscribe %}
-                                    Отписаться
+                                    ОтписАться
                                 {% else %}
-                                    Подписаться
+                                    ПодписАться
                                 {% endif %}
                             </button>
+
                         </div>
 
                 {% endfor %}
@@ -45,56 +48,53 @@
         </tr>
     </table>
     <script>
-        if (window.innerWidth <= 400) {
-            location.href = "#mainTable";
+        function toggleSubscription(button) {
+            const eventId = button.getAttribute('data-event-id');
+            const subscribed = button.getAttribute('data-subscribed') === 'true';
+
+            const data = {
+                event_id: eventId,
+                subscribe: !subscribed
+            };
+
+            fetch('/calendar/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')  // Django CSRF token
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.success) {
+                    // Обновить состояние кнопки без перезагрузки страницы
+                    button.setAttribute('data-subscribed', (!subscribed).toString());
+                    button.textContent = !subscribed ? 'ОтпИсаться' : 'ПодпИсаться';
+                    button.classList.toggle('unsubscribed', !subscribed);
+                    button.classList.toggle('subscribed', subscribed);
+                } else {
+                    console.error('Не удалось обновить подписку');
+                }
+            })
+            .catch(error => console.error('Ошибка:', error));
         }
 
-        // Получаем значение подписки из Django шаблона
-        let isSubscribed = {{ details.subscribe|lower }}; // Преобразуем в lowercase для JavaScript (True/False в виде строки)
-<!--        isSubscribed = false;-->
-        const subscribeButton = document.getElementById('event-subscribe');
-
-        // Устанавливаем стиль и текст кнопки в зависимости от значения isSubscribed
-        if (isSubscribed === 'true') {
-            subscribeButton.classList.add('unsubscribed');
-            subscribeButton.classList.remove('subscribed');
-            subscribeButton.textContent = 'Отписаться';
-        } else {
-            subscribeButton.classList.add('subscribed');
-            subscribeButton.classList.remove('unsubscribed');
-            subscribeButton.textContent = 'Подписаться';
-        }
-
-        // Обработчик клика для кнопки
-        subscribeButton.addEventListener('click', function() {
-            if (isSubscribed === 'true') {
-                // Логика для отписки
-                console.log('Вы отписались от мероприятия.');
-                // Здесь можно также обновить состояние на сервере
-                subscribeButton.textContent = 'Подписаться';
-                subscribeButton.classList.remove('unsubscribed');
-                subscribeButton.classList.add('subscribed');
-                isSubscribed = 'false'; // Обновляем состояние подписки
-            } else {
-                // Логика для подписки
-                console.log('Вы подписались на мероприятие.');
-                // Здесь можно также обновить состояние на сервере
-                subscribeButton.textContent = 'Отписаться';
-                subscribeButton.classList.remove('subscribed');
-                subscribeButton.classList.add('unsubscribed');
-                isSubscribed = 'true'; // Обновляем состояние подписки
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
             }
-        });
-
-        html {
-            scroll-behavior: smooth; /* Плавная прокрутка при переходе по якорям */
+            return cookieValue;
         }
-        window.onload = function() {
-            window.scrollTo(0, 0); // Прокрутка в начало страницы
-        };
 
-        window.onresize = function() {
-            window.scrollTo(0, 0); // Прокрутка в начало страницы при изменении размера
-        };
     </script>
+
 {% endblock %}
