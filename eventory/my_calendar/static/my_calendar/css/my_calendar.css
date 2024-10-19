@@ -30,13 +30,16 @@ th, td {
     padding: 20px;
     text-align: center;
     border: 1px solid #ddd;
+    background-color: #f9f9f9;
+    vertical-align: top; /* Установите это, если есть необходимость */
 }
 
 /* Стили для заголовков месяцев */
 th, td {
-    padding: 10px;
+    padding: 2px;
     text-align: center;
     border: 1px solid #ddd;
+    background-color: #f9f9f9;
     width: 8.33%; /* Устанавливаем одинаковую ширину для всех ячеек (12 столбцов) */
 }
 
@@ -98,6 +101,9 @@ td:empty {
     margin-top: 15px; /* Отступ для того, чтобы тип мероприятия не закрывал текст */
     color: #333;
     text-align: left;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 
 /* Тип мероприятия (в левом верхнем углу) */
@@ -208,6 +214,7 @@ td:empty {
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
+        overflow: hidden; /* Скрывает лишний текст */
     }
 
     /* Контейнер для даты и времени */
@@ -267,6 +274,21 @@ td:empty {
 
 /* Медиазапросы для мобильных устройств */
 @media (max-width: 400px) {
+    body {
+        margin: 1px;
+        display: block; /* Вместо flex устанавливаем block */
+    }
+
+    .table-container {
+        overflow-x: auto; /* Позволяет горизонтальную прокрутку */
+    }
+    /* Стили для заголовков месяцев */
+    th, td {
+        font-size: 0.5em; /* Автоматически подстраивается в диапазоне */
+        padding: 1px;
+
+    }
+
     /* Стиль карточек событий */
     .event-card {
         margin: 0; /* Убираем внешние отступы */
@@ -275,7 +297,7 @@ td:empty {
         border: 1px solid #ddd;
         padding: 5px;
         min-height: 92px;
-        min-width: 90px;
+        min-width: 78px;
 
         border-radius: 5px;
         display: flex;

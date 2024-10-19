@@ -1,115 +1,53 @@
-from django.shortcuts import render
+import json
 
-# Create your views here.
-# def my_calendar(request):
-#     context = {
-#         'message': 'Это динамическое сообщение!'
-#     }
-#     return render(request, 'my_calendar/my_calendar.html', context)
+from django.contrib.auth.models import User
+from django.shortcuts import render, get_object_or_404
+from django.http import JsonResponse, HttpResponse
+from .models import Event, get_all_events_grouped_by_month, EventUser, get_all_events_by_month
+
+
 def my_calendar(request):
-    events = {
-        'Январь': {
-            'name': 'Новогодняя вечеринка',
-            'interest': 'IT',
-            'date': '1 января 2024',
-            'time': '14:00',
-            'organizer': 'ООО "Ромашка"',
-            'subscribe': False
-        },
-        'Февраль': {
-            'name': 'День святого Валентина',
-            'interest': 'Team',
-            'date': '14 февраля 2024',
-            'time': '18:00',
-            'organizer': 'Клуб \"Любовь\"',
-            'subscribe': True
-        },
-        'Март': {
-            'name': '8 Марта',
-            'interest': 'Businuss',
-            'date': '8 марта 2024',
-            'time': '12:00',
-            'organizer': 'Женская ассоциация',
-            'subscribe': False
-        },
-        'Апрель': {
-            'name': 'Пасха',
-            'interest': 'Businuss',
-            'date': '5 апреля 2024',
-            'time': '10:00',
-            'organizer': 'Приход \"Светлая Надежда\"',
-            'subscribe': False
-        },
-        'Май': {
-            'name': 'День Победы',
-            'interest': 'Businuss',
-            'date': '9 мая 2024',
-            'time': '11:00',
-            'organizer': 'Городская администрация',
-            'subscribe': False
-        },
-        'Июнь': {
-            'name': 'Летний фестиваль',
-            'interest': 'IT',
-            'date': '20 июня 2024',
-            'time': '15:00',
-            'organizer': 'Центр культуры',
-            'subscribe': True
-        },
-        'Июль': {
-            'name': 'День города',
-            'interest': 'Businuss',
-            'date': '12 июля 2024',
-            'time': '17:00',
-            'organizer': 'Городская администрация',
-            'subscribe': False
-        },
-        'Август': {
-            'name': 'День Независимости',
-            'interest': 'Basketbol',
-            'date': '24 августа 2024',
-            'time': '16:00',
-            'organizer': 'Государственный комитет',
-            'subscribe': False
-        },
-        'Сентябрь': {
-            'name': 'День знаний',
-            'interest': 'Biatlon',
-            'date': '1 сентября 2024',
-            'time': '09:00',
-            'organizer': 'Школьный совет',
-            'subscribe': True
-        },
-        'Октябрь': {
-            'name': 'Хэллоуин',
-            'interest': 'Cars',
-            'date': '31 октября 2024',
-            'time': '19:00',
-            'organizer': 'Клуб \"Магия\"',
-            'subscribe': False
-        },
-        'Ноябрь': {
-            'name': 'День благодарения',
-            'interest': 'Moto',
-            'date': '28 ноября 2024',
-            'time': '18:30',
-            'organizer': 'Семейный центр',
-            'subscribe': False
-        },
-        'Декабрь': {
-            'name': 'Рождество',
-            'interest': 'Dakar',
-            'date': '25 декабря 2024',
-            'time': '15:00',
-            'organizer': 'Церковь \"Радость\"',
-            'subscribe': True
-        }
-    }
+    if request.method == 'POST':
+        # Обработка POST-запроса для обновления подписки
+        try:
+            data = json.loads(request.body)
+            print(data)
 
-    return render(request, 'my_calendar/my_calendar.html', {'events': events})
+            if not request.user.is_authenticated:
+                return JsonResponse({"success": False, "error": "User is not authenticated"})
 
-def my_test_calendar(request):
-    context = {
-        'message': 'Это 2-я страница!'
-    }
-    return render(request, 'my_calendar/my_test_calendar.html', context)
+            user_id = request.user.id
+            event_id = data.get('event_id')
+            subscribe = data.get('subscribe')
+
+            print(f"Current user ID is: {user_id}")
+
+            # Получаем объект пользователя
+            user = get_object_or_404(User, id=user_id)
+
+            # Получаем объект события
+            event = get_object_or_404(Event, id=event_id)
+
+            # Получаем или создаем объект EventUser
+            event_user, created = EventUser.objects.get_or_create(event_id=event, user_id=user)
+
+            # Обновляем поле подписки
+            event_user.subscribe = subscribe
+            event_user.save()
+
+            # Возврат JSON-ответа о успешном обновлении
+            return JsonResponse({'success': True})
+        except Event.DoesNotExist:
+            return JsonResponse({'success': False, 'error': 'Event not found'})
+        except json.JSONDecodeError:
+            return JsonResponse({'success': False, 'error': 'Invalid JSON data'})
+    else:
+        # Обработка GET-запроса
+        # events = get_all_events_grouped_by_month()
+        events = get_all_events_by_month()
+        return render(request, 'my_calendar/my_calendar.html', {'events': events})
+
+
+
+
+
