@@ -1,6 +1,6 @@
 {% extends 'main/layout.html' %}
 
-{% block title %}User registration{% endblock %}
+{% block title %}Event registration{% endblock %}
 
 
 {% block content %}
@@ -16,19 +16,27 @@
         <input type="text" id="organizer" name="organizer" required>
 
         <label for="date">Дата:</label>
-        <input id="date" name="date" type="date" /><br>
+        <input id="date" name="date" type="date" required /><br>
 
-        <label for="start-time">Время начала:</label>
-        <input id="start-time" name="start-time" type="time" value="00:00" /><br>
+        <label for="time">Время начала:</label>
+        <input id="time" name="time" type="time" value="00:00" required /><br>
 
         <div class="dropdown">
-            <div class="selected-items"><label for="tags">Тематика мероприятия:</label></div>
+            <div class="selected-items"><label for="tag">Тематика мероприятия:</label></div>
                 <div class="dropdown-content">
                     {% for interest in interest_list %}
-                        <label><input type="checkbox" name="tags[]" value="{{ interest }}">{{ interest }}</label>
+                        <label><input type="radio" name="tag" value="{{ interest.id }}">{{ interest.interest }}</label>
                     {% endfor %}
                 </div>
         </div>
+        {% if error_interest %}
+            <div class="error-message" style="color: red;">
+                {{ error_interest }}
+            </div>
+        {% endif %}
+
+        <button type="submit" class="btn_register">Создать</button>
     </form>
+    <a href="{% url 'home' %}"><button type="submit" class="btn">Назад</button></a>
 
 {% endblock %}

@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect
-from .models import CustomUser, Interest
+from .models import CustomUser, Interest, Event
 
 
 def user_registration(request):
@@ -38,4 +38,25 @@ def succ_reg(request):
 
 def event_registration(request):
     interest_list = Interest.objects.all()
+    error_interest = None
+    try:
+        if request.method == 'POST':
+            interest_id = request.POST.get('tag')
+            print(f"Interest ID: {interest_id}")
+            if not interest_id:
+                error_interest = 'Необходимо выбрать тематику мероприятия.'
+                return render(request, 'registration/event_regs.html',
+                              {'interest_list': interest_list, 'error_interest': error_interest})
+            event = Event(
+                title=request.POST.get('title'),
+                date=request.POST.get('date'),
+                time=request.POST.get('time'),
+                organizer=request.POST.get('organizer'),
+                interest_id=interest_id
+            )
+            event.save()
+            return redirect('succ_reg')
+    except Exception as e:
+        return HttpResponse(f'Ошибка при создании мероприятия: {str(e)}')
+
     return render(request, 'registration/event_regs.html', {'interest_list': interest_list})
