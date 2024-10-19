@@ -55,8 +55,12 @@ def event_registration(request):
                 interest_id=interest_id
             )
             event.save()
-            return redirect('succ_reg')
+            return redirect('succ_event_reg')
     except Exception as e:
         return HttpResponse(f'Ошибка при создании мероприятия: {str(e)}')
 
     return render(request, 'registration/event_regs.html', {'interest_list': interest_list})
+
+
+def succ_event_reg(request):
+    return render(request, 'registration/succ_event_reg.html')
