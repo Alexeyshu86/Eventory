@@ -1,6 +1,6 @@
 import json
 
-from django.contrib.auth.models import User
+from registration.models import CustomUser
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse, HttpResponse
 from .models import Event, get_all_events_grouped_by_month, EventUser, get_all_events_by_month
@@ -23,7 +23,7 @@ def my_calendar(request):
             print(f"Current user ID is: {user_id}")
 
             # Получаем объект пользователя
-            user = get_object_or_404(User, id=user_id)
+            user = get_object_or_404(CustomUser, id=user_id)
 
             # Получаем объект события
             event = get_object_or_404(Event, id=event_id)

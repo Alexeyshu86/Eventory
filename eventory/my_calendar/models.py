@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-from eventory.registration.models import Event
+from registration.models import Event, CustomUser
 
 # from registration.models import Event
 
@@ -25,7 +25,7 @@ from eventory.registration.models import Event
 #         return f"{self.title}"
 
 class EventUser(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     event_id = models.ForeignKey(Event, on_delete=models.CASCADE)
     subscribe = models.BooleanField(default=False)
 
@@ -60,7 +60,7 @@ def get_all_events_grouped_by_month():
                 events_by_month[month_name_russian].append({
                     'event_id': event.id,
                     'title': event.title,
-                    'interest': event.interest_id,
+                    'interest': event.interest,
                     'date': event.date.strftime('%d %B %Y'),
                     'time': event.time.strftime('%H:%M'),
                     'organizer': event.organizer,
@@ -93,7 +93,7 @@ def get_all_events_by_month():
             event_data = {
                 'event_id': event.id,
                 'title': event.title,
-                'interest': event.interest_id,
+                'interest': event.interest,
                 'date': event.date.strftime('%d %B %Y'),
                 'time': event.time.strftime('%H:%M'),
                 'organizer': event.organizer,
