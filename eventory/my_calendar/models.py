@@ -1,23 +1,28 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-class Interest(models.Model):
-    interest = models.CharField(max_length=30)
+from eventory.registration.models import Event
 
-    def __str__(self):
-        return self.interest
+# from registration.models import Event
 
-# Create your models here.
-class Event(models.Model):
-
-    interest_id = models.ForeignKey(Interest, on_delete=models.CASCADE, db_column='interest_id')
-    title = models.CharField(max_length=30, blank=False)
-    date = models.DateField()
-    time = models.TimeField()
-    organizer = models.CharField(max_length=30, blank=False)
-
-    def __str__(self):
-        return f"{self.title}"
+# Interest
+# class Interest(models.Model):
+#     interest = models.CharField(max_length=30)
+#
+#     def __str__(self):
+#         return self.interest
+#
+# # Create your models here.
+# class Event(models.Model):
+#
+#     interest_id = models.ForeignKey(Interest, on_delete=models.CASCADE, db_column='interest_id')
+#     title = models.CharField(max_length=30, blank=False)
+#     date = models.DateField()
+#     time = models.TimeField()
+#     organizer = models.CharField(max_length=30, blank=False)
+#
+#     def __str__(self):
+#         return f"{self.title}"
 
 class EventUser(models.Model):
     user_id = models.ForeignKey(User, on_delete=models.CASCADE)
