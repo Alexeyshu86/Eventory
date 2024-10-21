@@ -5,7 +5,7 @@
 {% block content %}
     <h1>EVENTORY</h1>
 <!--    <form action="/login" method="POST">-->
-    <form method="POST">
+    <form class="HomeForm" method="POST">
         {% csrf_token %}
         <label for="username">Введите Email:</label><br>
         <input type="text" id="username" name="username" required><br><br>

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'main',
     'my_calendar',
     'registration',
+    'cabinet',
 ]
 
 MIDDLEWARE = [
