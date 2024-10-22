@@ -42,7 +42,7 @@ class EventUser(models.Model):
 
         return Event.objects.filter(eventuser__user_id=user, eventuser__subscribe=True)
 
-def get_all_events_by_month():
+def get_all_events_by_month(user_in_ses):
     # Создаем словарь для хранения событий, сгруппированных по месяцам
     month_translation = gerate_dict_mounth_rus_name()
 
@@ -60,6 +60,23 @@ def get_all_events_by_month():
         month_name_russian = month_translation.get(month_name_english, '').lower()
 
         # Добавляем событие в словарь, даже если нет связанных записей EventUser
+        # if month_name_russian in events_by_month:
+        #     event_data = {
+        #         'event_id': event.id,
+        #         'title': event.title,
+        #         'interest': event.interest,
+        #         'date': event.date.strftime('%d %B %Y'),
+        #         'time': event.time.strftime('%H:%M'),
+        #         'organizer': event.organizer,
+        #         'subscribe': None  # Указываем None, если нет данных о подписке
+        #     }
+        #     if event.eventuser_set.exists():
+        #         for event_user in event.eventuser_set.all():
+        #             # Если есть связанные записи EventUser, обновляем значение подписки
+        #             event_data['subscribe'] = event_user.subscribe
+        #     events_by_month[month_name_russian].append(event_data)
+        current_user = user_in_ses
+
         if month_name_russian in events_by_month:
             event_data = {
                 'event_id': event.id,
@@ -68,13 +85,15 @@ def get_all_events_by_month():
                 'date': event.date.strftime('%d %B %Y'),
                 'time': event.time.strftime('%H:%M'),
                 'organizer': event.organizer,
-                'subscribe': False  # Указываем None, если нет данных о подписке
+                'subscribe': None  # Изначально None, если данные о подписке отсутствуют
             }
-            if event.eventuser_set.exists():
-                for event_user in event.eventuser_set.all():
-                    # Если есть связанные записи EventUser, обновляем значение подписки
-                    event_data['subscribe'] = event_user.subscribe
-            events_by_month[month_name_russian].append(event_data)
 
+            # Проверяем, есть ли информация о подписке текущего пользователя на событие
+            event_user = event.eventuser_set.filter(user_id=current_user).first()  # Фильтрация по текущему пользователю
+            if event_user:
+                event_data[
+                    'subscribe'] = event_user.subscribe  # Обновляем значение подписки только для текущего пользователя
+
+            events_by_month[month_name_russian].append(event_data)
 
     return events_by_month

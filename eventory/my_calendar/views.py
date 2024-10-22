@@ -42,7 +42,7 @@ def my_calendar(request):
     else:
         # Обработка GET-запроса
         # events = get_all_events_grouped_by_month()
-        events = get_all_events_by_month()
+        events = get_all_events_by_month(user_in_ses)
         return render(request, 'my_calendar/my_calendar.html', {'events': events})
 
 
