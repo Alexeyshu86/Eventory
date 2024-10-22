@@ -7,6 +7,7 @@ from .models import Event, EventUser, get_all_events_by_month
 
 
 def my_calendar(request):
+    user_in_ses = CustomUser.objects.get(id=request.session.get('user_id'))  # добавил
     if request.method == 'POST':
         # Обработка POST-запроса для обновления подписки
         try:
@@ -15,7 +16,7 @@ def my_calendar(request):
             if not request.user.is_authenticated:
                 return JsonResponse({"success": False, "error": "User is not authenticated"})
 
-            user_id = request.user.id
+            user_id = user_in_ses.id  # было: request.user.id
             event_id = data.get('event_id')
             subscribe = data.get('subscribe')
 

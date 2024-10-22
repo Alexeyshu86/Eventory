@@ -31,9 +31,9 @@
                                     data-subscribed="{{ event.subscribe }}"
                                     onclick="toggleSubscription(this)">
                                 {% if event.subscribe %}
-                                    Отписаться
+                                    ОтпИсаться
                                 {% else %}
-                                    Подписаться
+                                    ПодпИсаться
                                 {% endif %}
                             </button>
 
@@ -70,7 +70,7 @@
                 if (result.success) {
                     // Обновить состояние кнопки без перезагрузки страницы
                     button.setAttribute('data-subscribed', (!subscribed).toString());
-                    button.textContent = !subscribed ? 'Отписаться' : 'Подписаться';
+                    button.textContent = !subscribed ? 'ОтписАться' : 'ПодписАться';
                     button.classList.toggle('unsubscribed', !subscribed);
                     button.classList.toggle('subscribed', subscribed);
                 } else {

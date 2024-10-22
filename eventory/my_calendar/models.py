@@ -19,8 +19,22 @@ class EventUser(models.Model):
         return f"{self.user_id.username} subscribed to {self.event_id.title}"
 
     # возвращает все события
-    def get_all_event(self):
-        return Event.objects.prefetch_related('eventuser_set')
+    @classmethod
+    def get_all_event(cls):
+        # return Event.objects.prefetch_related('eventuser_set')
+        return Event.objects.all()
+
+    def get_all_event_cur_user(self, cur_user_id):
+        # if Event.objects.get(cur_user_id) is None:
+            # return Event.objects.filter(eventuser__user_id=cur_user_id, eventuser__subscribe=False)
+            # return Event.objects.prefetch_related('eventuser_set')
+        return Event.objects.filter(eventuser__user_id=cur_user_id, eventuser__subscribe=True)
+
+    @classmethod
+    def get_all_eventuser(cls, user_id):
+        user = get_object_or_404(CustomUser, id=user_id)
+
+        return Event.objects.all().filter(eventuser__user_id=user)
 
     @classmethod
     def get_sub_eventuser(cls, user_id):
@@ -32,8 +46,11 @@ def get_all_events_by_month():
     # Создаем словарь для хранения событий, сгруппированных по месяцам
     month_translation = gerate_dict_mounth_rus_name()
 
-    events = Event.objects.prefetch_related('eventuser_set').all()
-    # events = EventUser.get_sub_eventuser(1)
+    # events = Event.objects.prefetch_related('eventuser_set').all()
+    # events = EventUser.get_all_event_cur_user(2)
+    # events = EventUser.get_sub_eventuser(2)
+    # events = EventUser.get_all_eventuser(3)
+    events = EventUser.get_all_event()
 
     events_by_month = {month: [] for month in month_translation.values()}
 
@@ -51,7 +68,7 @@ def get_all_events_by_month():
                 'date': event.date.strftime('%d %B %Y'),
                 'time': event.time.strftime('%H:%M'),
                 'organizer': event.organizer,
-                'subscribe': None  # Указываем None, если нет данных о подписке
+                'subscribe': False  # Указываем None, если нет данных о подписке
             }
             if event.eventuser_set.exists():
                 for event_user in event.eventuser_set.all():
