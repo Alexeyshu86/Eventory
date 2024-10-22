@@ -3,7 +3,7 @@ import json
 from registration.models import CustomUser
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse, HttpResponse
-from .models import Event, get_all_events_grouped_by_month, EventUser, get_all_events_by_month
+from .models import Event, EventUser, get_all_events_by_month
 
 
 def my_calendar(request):
@@ -11,7 +11,6 @@ def my_calendar(request):
         # Обработка POST-запроса для обновления подписки
         try:
             data = json.loads(request.body)
-            print(data)
 
             if not request.user.is_authenticated:
                 return JsonResponse({"success": False, "error": "User is not authenticated"})
@@ -19,8 +18,6 @@ def my_calendar(request):
             user_id = request.user.id
             event_id = data.get('event_id')
             subscribe = data.get('subscribe')
-
-            print(f"Current user ID is: {user_id}")
 
             # Получаем объект пользователя
             user = get_object_or_404(CustomUser, id=user_id)
