@@ -50,12 +50,7 @@ def my_calendar(request):
 
             # # Возврат JSON-ответа о успешном обновлении
             return JsonResponse({'success': True, "response": "успешно"})
-            # Возвращаем JSON-ответ с дополнительными данными
-            # return JsonResponse({
-            #     'success': True,
-            #     'event_id': event_id,
-            #     'subscribe': not subscribe,
-            # })
+
         except Event.DoesNotExist:
             return JsonResponse({'success': False, 'error': 'Event not found'})
         except json.JSONDecodeError:
@@ -67,11 +62,7 @@ def my_calendar(request):
                 return JsonResponse({'success': False, 'error': 'Missing required data'})
 
             return JsonResponse({'success': False, 'error': 'Invalid JSON data'})
-    # else:
-    #     # Обработка GET-запроса
-    #     # events = get_all_events_grouped_by_month()
-    #     events = get_all_events_by_month(user_in_ses)
-    #     return render(request, 'my_calendar/my_calendar.html', {'events': events})
+
 
     if request.method == 'GET':
         # Обработка GET-запроса
