@@ -43,23 +43,11 @@
         </tr>
     </table>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-                // Выбираем все кнопки с классом 'event-subscribe'
-                const buttons = document.querySelectorAll('.event-subscribe');
+        const subscribeText = "Подписатьcя";
+        const unsubscribeText = "Отписатьcя";
 
-                // Проходим по каждой кнопке, чтобы обновить ее состояние
-                buttons.forEach(button => {
-                    updateButtonState(button);
-                });
-            });
-
-        function updateButtonState(button) {
-
-            const subscribeText = "ПодписатьСя";
-            const unsubscribeText = "ОтписатьСя";
-
-            let isSubscribed = button.getAttribute('data-subscribed') === 'True';
-
+        // Функция для обновления текста и классов кнопки
+        function updateButtonAppearance(button, isSubscribed) {
             // Обновляем текст кнопки в зависимости от состояния подписки
             button.innerHTML = isSubscribed ? unsubscribeText : subscribeText;
 
@@ -73,9 +61,26 @@
             }
         }
 
+        document.addEventListener("DOMContentLoaded", function() {
+                // Выбираем все кнопки с классом 'event-subscribe'
+                const buttons = document.querySelectorAll('.event-subscribe');
+
+                // Проходим по каждой кнопке, чтобы обновить ее состояние
+                buttons.forEach(button => {
+                    updateButtonState(button);
+                });
+            });
+
+        function updateButtonState(button) {
+
+            console.log("type sub:", button.getAttribute('data-subscribed'))
+            let isSubscribed = button.getAttribute('data-subscribed') === 'True';
+
+            updateButtonAppearance(button, isSubscribed)
+        }
+
         function toggleSubscription(button) {
             const eventId = button.getAttribute('data-event-id');
-<!--            const subscribed = button.getAttribute('data-subscribed') === 'true';  // Преобразуем в булево-->
             let subscribed = button.getAttribute('data-subscribed') === 'True';
             console.log("event:", eventId)
             console.log("subscribed:", subscribed)
@@ -97,14 +102,20 @@
             })
             .then(response => response.json())
             .then(result => {
+                console.log("result:", result.success)
                 if (result.success) {
                     // Обновить состояние кнопки
                     const newSubscribedState = !subscribed;
+
                     console.log("new:", newSubscribedState)
-                    button.setAttribute('data-subscribed', newSubscribedState.toString());
-                    button.textContent = newSubscribedState ? 'ОтписАться' : 'ПодписАться';
-                    button.classList.toggle('unsubscribed', newSubscribedState);
-                    button.classList.toggle('subscribed', !newSubscribedState);
+
+                    button.setAttribute('data-subscribed', newSubscribedState ? 'True' : 'False');
+
+                    console.log("data-subscribed:", newSubscribedState.toString())
+
+                    let isSubscribed = button.getAttribute('data-subscribed') === 'True';
+                    updateButtonAppearance(button, isSubscribed)
+
                 } else {
                     console.error('Не удалось обновить подписку');
                 }
