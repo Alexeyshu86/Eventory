@@ -1,0 +1,250 @@
+{% extends 'my_calendar/shablon.html' %}
+
+{% block content %}
+    <h1>Календарь событий</h1>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'my_calendar/css/my_calendar.css' %}">
+
+    <table id="mainTable">
+        <tr>
+            {% for month, details in events.items %}
+            <th>{{ month }}</th>
+            {% endfor %}
+        </tr>
+        <tr>
+            {% for month, events_list in events.items %}
+            <th>
+
+                {% for event in events_list %}
+                        <div class="event-card">
+                            <div class="event-name">{{ event.title }}</div>
+                            <div class="event-interest">{{ event.interest }}</div>
+                            <div class="event-organizer">организатор: {{ event.organizer }}</div>
+                            <div class="event-details"> <!-- Контейнер для даты и времени -->
+                                <div class="event-date">{{ event.date }}</div>
+                                <div class="event-time">{{ event.time }}</div>
+                            </div>
+                            {% csrf_token %}
+                            <button class="event-subscribe"
+                                    onclick="toggleSubscription(this)"
+                                    data-event-id="{{ event.event_id }}"
+                                    data-subscribed="{{ event.subscribe }}">
+                            </button>
+                        </div>
+
+                {% endfor %}
+            </th>
+            {% endfor %}
+        </tr>
+        <tr>
+
+        </tr>
+    </table>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Инициализация кнопок при загрузке страницы
+            document.querySelectorAll('.event-subscribe').forEach(button => {
+                updateButtonState(button);  // Обновляем текст и стили кнопки при загрузке страницы
+            });
+        });
+
+        // Определяем тексты для подписки и отписки
+        const subscribeText = "ПодписатьСя";
+        const unsubscribeText = "ОтписатьСя";
+
+        console.log(unsubscribeText)
+
+        function toggleSubscription(button) {
+            const eventId = button.getAttribute('data-event-id');
+            let isSubscribed = button.getAttribute('data-subscribed') === 'true'; // Преобразуем в булево
+
+            console.log(eventId)
+            console.log(isSubscribed)
+
+            data = {
+                event_id: eventId,
+                subscribe: isSubscribed  // Инвертируем значение
+            };
+
+            console.log(data)
+
+            fetch('/calendar/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')  // Django CSRF token
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        // Меняем состояние подписки
+                        isSubscribed = !isSubscribed;
+                        button.setAttribute('data-subscribed', isSubscribed);
+                        updateButtonState(button);  // Обновляем текст и стили кнопки после изменения состояния
+                    } else {
+                        console.error('Ошибка подписки:');
+                    }
+                })
+                .catch(error => console.error('Ошибка:', error));
+        }
+
+        function updateButtonState(button) {
+            let isSubscribed = button.getAttribute('data-subscribed') === 'true';
+
+            // Обновляем текст кнопки в зависимости от состояния
+            button.innerHTML = isSubscribed ? unsubscribeText : subscribeText;
+
+            // Обновляем классы для стилизации кнопки
+            if (isSubscribed) {
+                button.classList.remove('subscribed');
+                button.classList.add('unsubscribed');
+            } else {
+                button.classList.remove('unsubscribed');
+                button.classList.add('subscribed');
+            }
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+
+
+{% endblock %}
+
+        function updateButtonState(button) {
+
+            const subscribeText = "ПодписатьСя";
+            const unsubscribeText = "ОтписатьСя";
+
+            // Определяем статус подписки
+            console.log("статус:", button.getAttribute('data-subscribed'))
+
+            // Получение значения атрибута, Преобразование в логическое значение
+            let subscribedValue = button.getAttribute('data-subscribed');
+            let isSubscribed = subscribedValue === 'True';
+
+            console.log("Кнопка ID:", button.getAttribute('data-event-id'));
+            console.log("Статус подписки:", isSubscribed);
+
+            // Обновляем текст кнопки в зависимости от состояния подписки
+            button.innerHTML = isSubscribed ? unsubscribeText : subscribeText;
+
+            // Обновляем классы для стилизации кнопки
+            if (isSubscribed) {
+                button.classList.remove('subscribed');
+                button.classList.add('unsubscribed');
+            } else {
+                button.classList.remove('unsubscribed');
+                button.classList.add('subscribed');
+            }
+        }
+
+function updateDataStyleButton(button) {
+            document.addEventListener("DOMContentLoaded", function() {
+                // Выбираем все кнопки с классом 'event-subscribe'
+                const buttons = document.querySelectorAll('.event-subscribe');
+
+                // Проходим по каждой кнопке, чтобы обновить ее состояние
+                buttons.forEach(button => {
+                    updateButtonState(button);
+                });
+            });
+        }
+
+        function toggleSubscription(button) {
+            const subscribeText = "ПодписатьСя";
+            const unsubscribeText = "ОтписатьСя";
+
+            const eventId = button.getAttribute('data-event-id');
+            let isSubscribed = button.getAttribute('data-subscribed') === 'True';
+
+            console.log(eventId)
+            console.log(isSubscribed)
+
+            data = {
+                event_id: eventId,
+                subscribe: !isSubscribed  // Инвертируем значение
+            };
+
+            console.log(data)
+
+            fetch('/calendar/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')  // Django CSRF token
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        // Меняем состояние подписки
+                        isSubscribed = !isSubscribed;
+                        button.setAttribute('data-subscribed', isSubscribed);
+                        if (isSubscribed) {
+                            button.classList.remove('subscribed');
+                            button.classList.add('unsubscribed');
+                        } else {
+                            button.classList.remove('unsubscribed');
+                            button.classList.add('subscribed');
+                        }
+                    } else {
+                        console.error('Ошибка подписки:');
+                    }
+                })
+                .catch(error => console.error('Ошибка:', error));
+        }
+
+        function updateButtonState(button) {
+
+            const subscribeText = "ПодписатьСя";
+            const unsubscribeText = "ОтписатьСя";
+
+            let isSubscribed = button.getAttribute('data-subscribed') === 'True';
+
+            // Обновляем текст кнопки в зависимости от состояния подписки
+            button.innerHTML = isSubscribed ? unsubscribeText : subscribeText;
+
+            // Обновляем классы для стилизации кнопки
+            if (isSubscribed) {
+                button.classList.remove('subscribed');
+                button.classList.add('unsubscribed');
+            } else {
+                button.classList.remove('unsubscribed');
+                button.classList.add('subscribed');
+            }
+        }
+
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        updateDataStyleButton()
+        toggleSubscription()

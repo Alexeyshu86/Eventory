@@ -26,15 +26,10 @@
                                 <div class="event-time">{{ event.time }}</div>
                             </div>
                             {% csrf_token %}
-                            <button class="event-subscribe {% if event.subscribe %}unsubscribed{% else %}subscribed{% endif %}"
+                            <button class="event-subscribe"
                                     data-event-id="{{ event.event_id }}"
                                     data-subscribed="{{ event.subscribe }}"
                                     onclick="toggleSubscription(this)">
-                                {% if event.subscribe %}
-                                    Отписаться
-                                {% else %}
-                                    Подписаться
-                                {% endif %}
                             </button>
 
                         </div>
@@ -47,54 +42,7 @@
 
         </tr>
     </table>
-    <script>
-        function toggleSubscription(button) {
-            const eventId = button.getAttribute('data-event-id');
-            const subscribed = button.getAttribute('data-subscribed') === 'true';
 
-            const data = {
-                event_id: eventId,
-                subscribe: !subscribed
-            };
-
-            fetch('/calendar/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCookie('csrftoken')  // Django CSRF token
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => response.json())
-            .then(result => {
-                if (result.success) {
-                    // Обновить состояние кнопки без перезагрузки страницы
-                    button.setAttribute('data-subscribed', (!subscribed).toString());
-                    button.textContent = !subscribed ? 'Отписаться' : 'Подписаться';
-                    button.classList.toggle('unsubscribed', !subscribed);
-                    button.classList.toggle('subscribed', subscribed);
-                } else {
-                    console.error('Не удалось обновить подписку');
-                }
-            })
-            .catch(error => console.error('Ошибка:', error));
-        }
-
-        function getCookie(name) {
-            let cookieValue = null;
-            if (document.cookie && document.cookie !== '') {
-                const cookies = document.cookie.split(';');
-                for (let i = 0; i < cookies.length; i++) {
-                    const cookie = cookies[i].trim();
-                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                        break;
-                    }
-                }
-            }
-            return cookieValue;
-        }
-
-    </script>
+    <script src="{% static 'my_calendar/js/calendar.js' %}"></script>
 
 {% endblock %}

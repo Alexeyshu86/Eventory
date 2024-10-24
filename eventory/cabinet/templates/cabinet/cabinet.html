@@ -8,5 +8,6 @@
     <p>Здравствуйте, {{ user.first_name }}</p>
     <a href="{% url 'change_data' %}"><button type="submit" class="btn">Изменить данные</button></a>
     <a href="{% url 'my_calendar' %}"><button type="submit" class="btn_calendar">Календарь</button></a>
+    <a href="{% url 'event_registration' %}"><button type="submit" class="btn_create_event">Создать мероприятие</button></a>
 
 {% endblock %}
