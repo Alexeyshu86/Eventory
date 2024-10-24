@@ -26,15 +26,10 @@
                                 <div class="event-time">{{ event.time }}</div>
                             </div>
                             {% csrf_token %}
-                            <button class="event-subscribe {% if event.subscribe %}unsubscribed{% else %}subscribed{% endif %}"
+                            <button class="event-subscribe"
                                     data-event-id="{{ event.event_id }}"
                                     data-subscribed="{{ event.subscribe }}"
                                     onclick="toggleSubscription(this)">
-                                {% if event.subscribe %}
-                                    ОтпИсаться
-                                {% else %}
-                                    ПодпИсаться
-                                {% endif %}
                             </button>
 
                         </div>
@@ -48,14 +43,49 @@
         </tr>
     </table>
     <script>
+        document.addEventListener("DOMContentLoaded", function() {
+                // Выбираем все кнопки с классом 'event-subscribe'
+                const buttons = document.querySelectorAll('.event-subscribe');
+
+                // Проходим по каждой кнопке, чтобы обновить ее состояние
+                buttons.forEach(button => {
+                    updateButtonState(button);
+                });
+            });
+
+        function updateButtonState(button) {
+
+            const subscribeText = "ПодписатьСя";
+            const unsubscribeText = "ОтписатьСя";
+
+            let isSubscribed = button.getAttribute('data-subscribed') === 'True';
+
+            // Обновляем текст кнопки в зависимости от состояния подписки
+            button.innerHTML = isSubscribed ? unsubscribeText : subscribeText;
+
+            // Обновляем классы для стилизации кнопки
+            if (isSubscribed) {
+                button.classList.remove('subscribed');
+                button.classList.add('unsubscribed');
+            } else {
+                button.classList.remove('unsubscribed');
+                button.classList.add('subscribed');
+            }
+        }
+
         function toggleSubscription(button) {
             const eventId = button.getAttribute('data-event-id');
-            const subscribed = button.getAttribute('data-subscribed') === 'true';  // Преобразуем в булево
+<!--            const subscribed = button.getAttribute('data-subscribed') === 'true';  // Преобразуем в булево-->
+            let subscribed = button.getAttribute('data-subscribed') === 'True';
+            console.log("event:", eventId)
+            console.log("subscribed:", subscribed)
 
             const data = {
                 event_id: eventId,
                 subscribe: !subscribed  // Инвертируем значение
             };
+
+            console.log("data:", data)
 
             fetch('/calendar/', {
                 method: 'POST',
@@ -70,6 +100,7 @@
                 if (result.success) {
                     // Обновить состояние кнопки
                     const newSubscribedState = !subscribed;
+                    console.log("new:", newSubscribedState)
                     button.setAttribute('data-subscribed', newSubscribedState.toString());
                     button.textContent = newSubscribedState ? 'ОтписАться' : 'ПодписАться';
                     button.classList.toggle('unsubscribed', newSubscribedState);

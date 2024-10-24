@@ -86,6 +86,7 @@ def get_all_events_by_month(user_in_ses):
                 'time': event.time.strftime('%H:%M'),
                 'organizer': event.organizer,
                 'subscribe': None  # Изначально None, если данные о подписке отсутствуют
+                # 'subscribe': False
             }
 
             # Проверяем, есть ли информация о подписке текущего пользователя на событие
