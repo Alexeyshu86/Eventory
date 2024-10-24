@@ -55,9 +55,13 @@ function toggleSubscription(button) {
         },
         body: JSON.stringify(data)
     })
+
     .then(response => response.json())
+
     .then(result => {
         console.log("result:", result.success)
+        console.log("mes:", result.error)
+
         if (result.success) {
             // Обновить состояние кнопки
             const newSubscribedState = !subscribed;

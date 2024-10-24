@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import logout
 from registration.models import CustomUser
 
 
@@ -18,3 +19,8 @@ def change_data(request):
     }
 
     return render(request, 'cabinet/change_data.html', context)
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('home')
