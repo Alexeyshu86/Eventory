@@ -1,46 +1,102 @@
-/* container для всего содержимого */
 .container {
+    padding-top: 300px;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    margin-left: 20px; /* отступ слева для данных */
+    flex-direction: row;
+    margin-left: 20px;
     width: 30%;
 }
 
-/* Заголовок */
-header h1 {
-    margin-bottom: 160px;
-}
-
-/* Блок с информацией о пользователе */
 .user_profile {
-    margin-bottom: 20px;
+    display: flex; /* Включаем flexbox */
+    flex-direction: column; /* Выстраиваем элементы в колонку */
+    align-items: center; /* Центрируем по горизонтали */
+    background-color: transparent;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    padding-bottom: 15px;
 }
 
-/* Контейнер для кнопок */
+.user_profile label,
+.user_profile_ul label {
+    text-align: center;
+    display: block;
+    padding: 8px;
+    border: 1px solid #fff;
+    width: 90%;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+
+.user_profile p {
+    width: 90%;
+    box-sizing: border-box;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.user_profile_ul {
+    list-style-type: none; /* Убираем маркеры списка */
+    width: 100%; /* Задаем ширину 100% для списка */
+}
+
+.user_profile_ul li{
+    width: 100%; /* Задаем ширину 100% для элементов списка */
+    padding: 8px; /* Добавляем отступы для элементов списка */
+    text-align: center; /* Центрируем текст внутри элемента списка */
+    border: 1px solid #ccc; /* Граница для элементов списка, по желанию */
+    border-radius: 10px; /* Закругление углов для элементов списка */
+    box-sizing: border-box; /* Учитываем отступы и границы в размере */
+    margin-top: 5px; /* Отступ между элементами списка */
+}
+
 .buttons {
     display: flex;
-    flex-direction: column; /* Располагаем кнопки вертикально */
-    align-items: flex-start; /* Выравниваем кнопки по левому краю */
-    width: auto; /* Отключаем ширину в 100%, чтобы кнопки не растягивались */
-    margin-top: 20px; /* Отступ сверху для кнопок */
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 15px;
+    width: 90%;
 }
 
-/* Стиль кнопок */
-.btn {
-    padding: 10px 20px;
-    color: white;
-    background-color: #007BFF;
-    border: none;
-    cursor: pointer;
-    margin-bottom: 10px; /* Отступ между кнопками */
+.buttons div {
+    display: flex; /* Включаем flexbox для внутренних div */
+    flex-direction: column; /* Элементы внутри div располагаем в колонку */
+    justify-content: space-between; /* Распределяем элементы по высоте */
+    flex: 0 0 33%; /* Устанавливаем ширину каждого блока на 33% */
+    box-sizing: border-box; /* Учитываем отступы и границы в общей ширине */
+}
+
+.buttons div a button {
+    width: 100%; /* Устанавливаем ширину кнопок на 100%, чтобы они занимали всю ширину ссылки */
+    margin-top: 10px;
+}
+
+.buttons div p {
+    flex-grow: 1;
+    width: 100%;
+    padding: 8px; /* Добавляем отступы для элементов списка */
+    text-align: center; /* Центрируем текст внутри элемента списка */
+    border: 1px solid #ccc; /* Граница для элементов списка, по желанию */
+    border-radius: 10px; /* Закругление углов для элементов списка */
+    box-sizing: border-box; /* Учитываем отступы и границы в размере */
+    margin-top: 5px; /* Отступ между элементами списка */
 }
 
 .btn_calendar {
-    background-color: #007BFF; /* Цвет для кнопки Календарь */
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
 }
 
-.btn_create_event {
-    background-color: #28a745; /* Цвет для кнопки Создать мероприятие */
+.btn_change_data {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
+
+#@media (max-width: 1800px)
+
+#@media (max-width: 400px)
+
+
+
 

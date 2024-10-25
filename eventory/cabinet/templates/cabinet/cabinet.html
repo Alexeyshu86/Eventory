@@ -1,31 +1,45 @@
 {% extends 'main/layout.html' %}
 
 {% block title %}Cabinet{% endblock %}
-
+{% load static %}
 {% block content %}
+    <h1>Личный кабинет</h1>
     <div class="container">
-        <header><h1>Личный кабинет</h1></header>
         <div class="user_profile">
-            <p><strong>Имя: </strong>{{ user.first_name }}</p>
-            <p><strong>Фамилия: </strong>{{ user.last_name }}</p>
-            <p><strong>Телефон: </strong>{{ user.phone }}</p>
-            <p><strong>Почта: </strong>{{ user.email }}</p>
+            <p><strong>Имя: </strong></p>
+            <label>{{ user.first_name }}</label>
+            <p><strong>Фамилия: </strong></p>
+            <label>{{ user.last_name }}</label>
+            <p><strong>Телефон: </strong></p>
+            <label>{{ user.phone }}</label>
+            <p><strong>Почта: </strong></p>
+            <label>{{ user.email }}</label>
             <p><strong>Интересы: </strong></p>
-            <ul class="user_profile_ul">
-                {% for interest in user.interests %}
-                    <li>{{ interest }}</li>
-                {% endfor %}
-            </ul>
-        </div>
+            <label>
+                <ul class="user_profile_ul">
+                        {% for interest in user.interests %}
+                            <li>{{ interest }}</li>
+                        {% endfor %}
+                </ul>
+            </label>
+            <div class="buttons">
+                <div>
+                    <p>Перейти в календарь мероприятий</p>
+                    <a href="{% url 'my_calendar' %}"><button type="submit" class="btn_calendar">Календарь</button></a>
+                </div>
+                <div>
+                    <p>Создать мероприятие</p>
+                    <a href="{% url 'event_registration' %}"><button type="submit" class="btn_create_event">Создать</button></a>
+                </div>
+                <div>
+                    <p>Изменить личные данные</p>
+                    <a href="{% url 'change_data' %}"><button type="submit" class="btn_change_data">Изменить </button></a>
+                </div>
 
-        <div class="buttons">
-            <a href="{% url 'my_calendar' %}"><button type="submit" class="btn btn_calendar">Календарь</button></a>
-            <a href="{% url 'event_registration' %}"><button type="submit" class="btn btn_create_event">Создать мероприятие</button></a>
-    <!--        <button class="btn btn_calendar">Календарь</button>-->
-    <!--        <button class="btn btn_create_event">Создать мероприятие</button>-->
+            </div>
         </div>
     </div>
-    <a href="{% url 'change_data' %}"><button type="submit" class="btn">Изменить данные</button></a>
+
     <a href="{% url 'logout' %}"><button type="submit" class="btn">На главную</button></a>
 
 {% endblock %}
