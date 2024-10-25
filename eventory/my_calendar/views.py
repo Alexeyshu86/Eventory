@@ -22,6 +22,7 @@ def my_calendar(request):
             # if not request.user.is_authenticated:
             #     return JsonResponse({"success": False "error": "User is not authenticated"})
 
+
             user_id = user_in_ses.id  # было: request.user.id
             # user_id = request.POST.get('user_id')
 
