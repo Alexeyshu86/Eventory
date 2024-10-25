@@ -1,6 +1,10 @@
 const subscribeText = "Подписатьcя";
 const unsubscribeText = "Отписатьcя";
 
+if (window.innerWidth <= 400) {
+    location.href = "#mainTable";
+}
+
 // Функция для обновления текста и классов кнопки
 function updateButtonAppearance(button, isSubscribed) {
     // Обновляем текст кнопки в зависимости от состояния подписки
@@ -92,3 +96,13 @@ function getCookie(name) {
     }
     return cookieValue;
 }
+
+//html {
+//    scroll-behavior: smooth; /* Плавная прокрутка при переходе по якорям */
+//}
+window.onload = function() {
+    window.scrollTo(0, 0); // Прокрутка в начало страницы
+};
+window.onresize = function() {
+    window.scrollTo(0, 0); // Прокрутка в начало страницы при изменении размера
+};

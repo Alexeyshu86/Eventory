@@ -41,6 +41,8 @@ th, td {
     border: 1px solid #ddd;
     background-color: #f9f9f9;
     width: 8.33%; /* Устанавливаем одинаковую ширину для всех ячеек (12 столбцов) */
+    min-height: 92px;
+    min-width: 100px;
 }
 
 /* Стили для ячеек */
@@ -286,7 +288,6 @@ td:empty {
     th, td {
         font-size: 0.5em; /* Автоматически подстраивается в диапазоне */
         padding: 1px;
-
     }
 
     /* Стиль карточек событий */
