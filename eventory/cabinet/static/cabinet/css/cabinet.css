@@ -1,8 +1,7 @@
 .container {
-    padding-top: 300px;
+    padding-top: 200px;
     display: flex;
     flex-direction: row;
-    margin-left: 20px;
     width: 30%;
 }
 
@@ -17,8 +16,7 @@
     padding-bottom: 15px;
 }
 
-.user_profile label,
-.user_profile_ul label {
+.user_profile label {
     text-align: center;
     display: block;
     padding: 8px;

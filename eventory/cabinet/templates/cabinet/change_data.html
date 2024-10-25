@@ -7,4 +7,38 @@
     <h1>CHANGE DATA</h1>
     <p>Здравствуйте, {{ user.first_name }}</p>
 
+    <form class="registrationForm" method="POST">
+        {% csrf_token %}
+        <label for="surname">Фамилия:</label>
+        <input type="text" id="surname" name="surname" placeholder="{{ user.last_name }}">
+
+        <label for="name">Имя:</label>
+        <input type="text" id="name" name="name" placeholder="{{ user.first_name }}">
+
+        <label for="phone">Номер телефона:</label>
+        <input type="tel" id="phone" name="phone" pattern="\+7\d{10}" placeholder="{{ user.phone }}">
+
+        <label for="email">Почта:</label>
+        <input type="email" id="email" name="email" placeholder="{{ user.email }}">
+
+        <label for="password">Старый пароль:</label>
+        <input type="password" id="password" name="password" placeholder="Введите старый пароль">
+
+        <label for="password">Новый пароль:</label>
+        <input type="password" id="password" name="password" placeholder="Введите новый пароль">
+
+        <div class="dropdown">
+            <div class="selected-items"><label for="tags">Мои интересы</label></div>
+            <div class="dropdown-content">
+                {% for interest in interest_list %}
+                    <label><input type="checkbox" name="tags[]" value="{{ interest }}">{{ interest }}</label>
+                {% endfor %}
+            </div>
+        </div>
+
+        <a href="{% url 'cabinet' %}"><button type="submit" class="btn_register">Сохранить</button></a>
+    </form>
+
+    <a href="{% url 'cabinet' %}"><button type="submit" class="btn">Назад</button></a>
+
 {% endblock %}
