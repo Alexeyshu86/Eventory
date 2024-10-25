@@ -43,14 +43,16 @@ INSTALLED_APPS = [
     'cabinet',
 ]
 
+AUTH_USER_MODEL = 'registration.CustomUser'
+
 MIDDLEWARE = [
-    # 'django.middleware.security.SecurityMiddleware',
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    # 'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'eventory.urls'
@@ -126,7 +128,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
@@ -137,4 +138,29 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AUTH_USER_MODEL = 'registration.CustomUser'
+LOGIN_URL = 'home'  # URL страницы авторизации
+LOGIN_REDIRECT_URL = 'my_calendar'  # URL для перенаправления после логина
+# LOGOUT_REDIRECT_URL = '/about/'
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Это стандартный способ хранения сессий в базе данных
+SESSION_COOKIE_AGE = 1209600  # Время жизни сессии в секундах (14 дней по умолчанию)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'django_debug.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
+
