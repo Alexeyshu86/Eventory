@@ -1,0 +1,46 @@
+/* container для всего содержимого */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 20px; /* отступ слева для данных */
+    width: 30%;
+}
+
+/* Заголовок */
+header h1 {
+    margin-bottom: 160px;
+}
+
+/* Блок с информацией о пользователе */
+.user_profile {
+    margin-bottom: 20px;
+}
+
+/* Контейнер для кнопок */
+.buttons {
+    display: flex;
+    flex-direction: column; /* Располагаем кнопки вертикально */
+    align-items: flex-start; /* Выравниваем кнопки по левому краю */
+    width: auto; /* Отключаем ширину в 100%, чтобы кнопки не растягивались */
+    margin-top: 20px; /* Отступ сверху для кнопок */
+}
+
+/* Стиль кнопок */
+.btn {
+    padding: 10px 20px;
+    color: white;
+    background-color: #007BFF;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 10px; /* Отступ между кнопками */
+}
+
+.btn_calendar {
+    background-color: #007BFF; /* Цвет для кнопки Календарь */
+}
+
+.btn_create_event {
+    background-color: #28a745; /* Цвет для кнопки Создать мероприятие */
+}
+

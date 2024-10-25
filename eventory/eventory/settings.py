@@ -132,6 +132,14 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# # Каталоги для поиска статических файлов
+# STATICFILES_DIRS = [
+#     BASE_DIR / 'main/static',  # Каталог для глобальной статики
+# ]
+#
+# # Папка для сборки статики при collectstatic (используется в продакшене)
+# STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
@@ -141,5 +149,3 @@ AUTH_USER_MODEL = 'registration.CustomUser'
 #
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Удалять сессионную куку при закрытии браузера
 
-
-# F9gwzFm6UF5BMfjZpW99fYB15y539Lo4
