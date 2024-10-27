@@ -28,11 +28,11 @@ form {
 }
 
 .HomeForm {
-    margin-top: 250px;
+    margin-top: 20px;
 }
 
 h1 {
-    margin-top: 20px;
+    margin-top: 300px;
     text-align: center;
     color: #333;
     display: block;
@@ -146,46 +146,5 @@ p a:hover {
     margin-top: 150px;
 }
 
-/* Медиа-запросы для мобильных устройств */
-@media (max-width: 600px) {
-    h1 {
-        font-size: 2em;
-        margin-top: 100px;
-    }
 
-    form {
-        width: 95%;
-        margin-top: 75px;
-    }
-
-    input[type="text"],
-    input[type="password"],
-    button {
-        padding: 12px;
-        font-size: 1em;
-    }
-
-    .registr {
-        margin-top: 20px;
-    }
-
-    .btn {
-        width: 90%;
-    }
-
-    .about {
-        max-height: calc(100vh - 100px)
-        width: 95%;
-        margin-bottom: 60px;
-        box-shadow: none;
-        border-radius: 0;
-        margin-top: 10px;
-    }
-
-    .about .btn {
-        margin: 0 auto; /* Центрируем кнопку по горизонтали */
-        position: static; /* Убираем фиксированное позиционирование */
-        margin-top: auto; /* Отодвигаем кнопку вниз */
-    }
-}
 

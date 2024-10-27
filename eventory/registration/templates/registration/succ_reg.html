@@ -1,8 +1,12 @@
 {% extends 'main/layout.html' %}
 
+{% load static %}
 {% block title %}Successful registration{% endblock %}
 
 {% block content %}
-    <h1>Спасибо за регистрацию.</h1>
+    <div class="centered-container">
+        <h1 class="registration-thank-you">Спасибо за регистрацию.</h1>
+    </div>
     <a href="{% url 'home' %}"><button type="submit" class="btn">На главную</button></a>
+    <link rel="stylesheet" href="{% static 'registration/css/succ_reg.css' %}">
 {% endblock %}
