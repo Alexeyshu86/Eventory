@@ -3,7 +3,7 @@
 {% block title %}Cabinet{% endblock %}
 {% load static %}
 {% block content %}
-    <h1>Личный кабинет</h1>
+    <h1 class="h_calendar">Личный кабинет</h1>
     <div class="container">
         <div class="user_profile">
             <p><strong>Имя: </strong></p>
@@ -24,7 +24,7 @@
             </label>
             <div class="buttons">
                 <div>
-                    <p>Перейти в календарь мероприятий</p>
+                    <p class="p_calendar">Перейти в календарь мероприятий</p>
                     <a href="{% url 'my_calendar' %}"><button type="submit" class="btn_calendar">Календарь</button></a>
                 </div>
                 <div>
