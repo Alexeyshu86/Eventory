@@ -11,7 +11,13 @@
         <input type="text" id="username" name="username" required><br><br>
 
         <label for="password">Пароль:</label><br>
-        <input type="password" id="password" name="password" required><br><br>
+        <input type="password" id="password" name="password" required><br>
+
+        {% if errors_incorrect %}
+            <div class="error-message">
+                {{ errors_incorrect }}
+            </div>
+        {% endif %}
 
         <button type="submit">Вход</button>
         <p class="registr"><a href="{% url 'user_registration' %}">Зарегистрироваться</a></p>
