@@ -8,11 +8,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'main/css/main.css' %}">
-    <link rel="stylesheet" href="{% static 'main/css/interest_list.css' %}">
-    <link rel="stylesheet" href="{% static 'main/css/events.css' %}">
-    <link rel="stylesheet" href="{% static 'cabinet/css/cabinet.css' %}">
-    <link rel="stylesheet" href="{% static 'cabinet/css/change_data.css' %}">
 
+    <!-- Блок для дополнительных стилей, которые будут подключаться на страницах-наследниках -->
+    {% block extra_css %}{% endblock %}
 </head>
 <body>
         {% block content %}
