@@ -2,10 +2,10 @@
 
 {% block title %}User registration{% endblock %}
 
-
+{% load static %}
 {% block content %}
 
-    <h1>Регистрация</h1>
+    <h1 class="user_regs_h1">Регистрация</h1>
     <form class="registrationForm" method="POST">
         {% csrf_token %}
             <label for="surname">Фамилия:</label>
@@ -41,10 +41,13 @@
             </div>
 
             <button type="submit" class="btn_register">Зарегистрироваться</button>
+            <p class="registr"><a href="{% url 'home' %}">На главную</a></p>
     </form>
-    <a href="{% url 'home' %}"><button type="submit" class="btn">На главную</button></a>
+<!--    <a href="{% url 'home' %}"><button type="submit" class="btn">На главную</button></a>-->
 
+    <link rel="stylesheet" href="{% static 'registration/css/user_regs.css' %}">
 {% endblock %}
+
 <script>
     // Обработчик событий для обновления выбранных элементов
     const checkboxes = document.querySelectorAll('.dropdown-content input[type="checkbox"]');

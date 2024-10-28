@@ -1,9 +1,12 @@
-from django.shortcuts import render, redirect, HttpResponse
-from django.contrib.auth.hashers import make_password, check_password
-from django.contrib.auth import logout
-from registration.models import CustomUser, Interest
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from django.shortcuts import render
+from registration.models import CustomUser
+import logging
 
 
+@login_required
 def cabinet(request):
     user = CustomUser.objects.get(id=request.session.get('user_id'))
     context = {
@@ -16,6 +19,7 @@ def cabinet(request):
 def update_data(custom_user_model, interest_model, user_id):
     user = custom_user_model.objects.get(id=user_id)
     interest_list = interest_model.objects.all()
+
     context = {
         'user': user,
         'interest_list': interest_list,
