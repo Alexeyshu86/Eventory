@@ -3,6 +3,11 @@
 {% load static %}
 {% block title %}Eventory{% endblock %}
 
+{% block extra_css %}
+    <!-- Подключаем уникальный CSS для главной страницы -->
+    <link rel="stylesheet" href="{% static 'main/css/index.css' %}">
+{% endblock %}
+
 {% block content %}
     <h1>EVENTORY</h1>
 <!--    <form action="/login" method="POST">-->
@@ -25,6 +30,5 @@
     </form>
     <a href="{% url 'about' %}"><button type="submit" class="btn">О нас</button></a>
 
-    <link rel="stylesheet" href="{% static 'main/css/index.css' %}">
 {% endblock %}
 

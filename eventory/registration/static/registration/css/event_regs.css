@@ -3,43 +3,46 @@ body {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    height: fit-content;
+    height: -webkit-fill-available;
     flex-direction: column;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
 }
 
-form {
-    background-color: transparent;
-    padding: 20px;
-    margin: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    text-align: center;
+.h_registration_event {
+    margin-top: 30px;
+    font-size: 26px;
 }
 
-.user_regs_h1 {
+.EventForm {
+    margin: 0px;
     margin-top: 20px;
-}
-
-.registrationForm {
-    margin-top: 10px;
     border: 1px;
     padding: 20px;
+    margin-block-end: 10px;
+}
+
+@media (max-width: 800px) {
+    body {
+        height: fit-content;
+    }
+
+    .btn {
+        position: fixed;
+    }
 }
 
 /* Медиа-запросы для мобильных устройств */
-@media (max-width: 400px) {
+@media (max-width: 420px) {
 
     body {
-        height: auto; /* Позволяет прокрутку вниз */
+        height: -webkit-fill-available;
     }
 
-    .user_regs_h1 {
-        font-size: 2em;
-        margin-top: 15px;
+    .h_registration_event {
+        margin-top: 30px;
+        font-size: 26px;
     }
 
     .registrationForm {
@@ -78,3 +81,30 @@ form {
         color: blue;
         text-decoration: none;
     }
+
+/* Медиа-запросы для мобильных устройств */
+@media (max-width: 375px) {
+
+    body {
+        height: fit-content;
+    }
+
+    .h_registration_event {
+        margin-top: 30px;
+        font-size: 20px;
+    }
+
+    .EventForm {
+        margin: 0px;
+        margin-top: 20px;
+        border: 1px;
+        padding: 20px;
+        margin-block-end: 40px;
+    }
+
+    .btn {
+        position: relative;
+        margin-left: 25px;
+        margin-block-end: 40px;
+    }
+
