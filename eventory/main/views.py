@@ -4,11 +4,8 @@ from django.contrib.auth.hashers import check_password
 
 
 def index(request):
-    errors_incorrect = None
-    if request.method == 'GET':
-        return render(request, 'main/index.html',
-                      {'errors_incorrect': errors_incorrect})
-    elif request.method == 'POST':
+
+    if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
         try:
@@ -17,15 +14,14 @@ def index(request):
                 request.session['user_id'] = user.id
                 return redirect('cabinet')
             else:
-                errors_incorrect = 'Почта или пароль не верны'
-                return render(request, 'main/index.html',
-                              {'errors_incorrect': errors_incorrect})
+                request.session['errors_incorrect'] = 'Почта или пароль не верны'
+                return redirect('home')
         except CustomUser.DoesNotExist:
-            errors_incorrect = 'Почта или пароль не верны'
-            return render(request, 'main/index.html',
-                          {'errors_incorrect': errors_incorrect})
+            request.session['errors_incorrect'] = 'Почта или пароль не верны'
+            return redirect('home')
 
-    # return render(request, 'main/index.html')
+    errors_incorrect = request.session.pop('errors_incorrect', None)
+    return render(request, 'main/index.html', {'errors_incorrect': errors_incorrect})
 
 
 def about(request):
