@@ -35,6 +35,16 @@
             </div>
         </div>
 
+        {% if errors_password %}
+            <div class="error-message-change">
+                {{ errors_password }}
+            </div>
+        {% elif change_success %}
+            <div class="success-message-change">
+                {{ change_success }}
+            </div>
+        {% endif %}
+
         <a href="{% url 'cabinet' %}"><button type="submit" class="btn_register">Сохранить</button></a>
     </form>
 
