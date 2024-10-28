@@ -111,6 +111,12 @@ body {
 }
 
 @media (max-width: 400px) {
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: content-box;
+    }
+
     body {
         height: auto; /* Позволяет прокрутку вниз */
         width: min-content;
@@ -243,20 +249,71 @@ body {
     }
 
     .btn {
-        position: revert;
-        margin-top: 10px;
+        position: relative;
+        margin-top: 30px;
+        margin-left: 10px;
         margin-block-end: 20px;
         min-width: -webkit-fill-available;
     }
 }
 
-@media (max-width: 320px) {
+@media (max-width: 375px) {
     body {
         height: auto; /* Позволяет прокрутку вниз */
-        width: min-content;
+        width: -webkit-fill-available;
         min-width: -webkit-min-content;
         background-size: var(); /* Масштабирует фон, чтобы он полностью был виден */
     }
+
+    .buttons div p {
+        font-size: 10px;
+        position: left;
+        flex-grow: 1;
+        width: 20%;
+        padding: 8px; /* Добавляем отступы для элементов списка */
+        text-align: left; /* Центрируем текст внутри элемента списка */
+        border: 1px solid #ccc; /* Граница для элементов списка, по желанию */
+        border-radius: 10px; /* Закругление углов для элементов списка */
+        box-sizing: border-box; /* Учитываем отступы и границы в размере */
+        margin-top: 5px; /* Отступ между элементами списка */
+        width: 20%;
+        position: revert;
+        min-width: fit-content;
+    }
+
+    .h_calendar {
+        font-size: 24px;
+    }
+
+    .buttons div a {
+        width: 100%; /* Устанавливаем ширину кнопок на 100%, чтобы они занимали всю ширину ссылки */
+        margin-top: 3px;
+    }
+
+    * {
+        box-sizing: content-box;
+    }
+
+    .buttons div a button{
+        font-size: 12px;
+    }
+
+    .buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 5px;
+        width: 90%;
+    }
+
+    .btn {
+        position: relative;
+        margin-top: 30px;
+        margin-left: 10px;
+        margin-block-end: 20px;
+        min-width: -webkit-fill-available;
+    }
+
 }
 
 

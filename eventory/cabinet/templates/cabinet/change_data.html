@@ -1,10 +1,10 @@
 {% extends 'main/layout.html' %}
 
 {% block title %}Cabinet{% endblock %}
-
+{% load static %}
 {% block content %}
 
-    <h1>Изменить данные</h1>
+    <h1 class="edit_data">Изменить данные</h1>
 
     <form class="registrationForm" method="POST">
         {% csrf_token %}
