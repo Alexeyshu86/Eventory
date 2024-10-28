@@ -1,11 +1,14 @@
-from distutils.command.check import check
 from django.shortcuts import render, HttpResponse, redirect
 from registration.models import CustomUser
 from django.contrib.auth.hashers import check_password
 
 
 def index(request):
-    if request.method == 'POST':
+    errors_incorrect = None
+    if request.method == 'GET':
+        return render(request, 'main/index.html',
+                      {'errors_incorrect': errors_incorrect})
+    elif request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
         try:
@@ -14,11 +17,15 @@ def index(request):
                 request.session['user_id'] = user.id
                 return redirect('cabinet')
             else:
-                return HttpResponse('Неверный пароль')
+                errors_incorrect = 'Почта или пароль не верны'
+                return render(request, 'main/index.html',
+                              {'errors_incorrect': errors_incorrect})
         except CustomUser.DoesNotExist:
-            return HttpResponse('Пользователь не найден')
+            errors_incorrect = 'Почта или пароль не верны'
+            return render(request, 'main/index.html',
+                          {'errors_incorrect': errors_incorrect})
 
-    return render(request, 'main/index.html')
+    # return render(request, 'main/index.html')
 
 
 def about(request):

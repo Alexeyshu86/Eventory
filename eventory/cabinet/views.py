@@ -26,7 +26,7 @@ def update_data(custom_user_model, interest_model, user_id):
 def update_password(old_password, new_password, user_id):
     user = CustomUser.objects.get(id=user_id)
     if check_password(old_password, user.password):
-        user.password = make_password(new_password)
+        user.set_password(new_password)
         user.save()
     else:
         return HttpResponse('Введите правильный пароль')
