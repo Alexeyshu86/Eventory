@@ -1,0 +1,45 @@
+body {
+    height: auto; /* Позволяет прокрутку вниз */
+    width: min-content;
+    min-width: -webkit-fill-available;
+    background-size: var(); /* Масштабирует фон, чтобы он полностью был виден */
+}
+
+.edit_data {
+    margin-top: 20px;
+}
+
+.registrationForm {
+    margin-top: 10px;
+    margin-block-end: 20px;
+}
+
+@media (max-width: 400px) {
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: content-box;
+    }
+
+    body {
+        height: auto; /* Позволяет прокрутку вниз */
+        width: min-content;
+        min-width: -webkit-fill-available;
+        background-size: var(); /* Масштабирует фон, чтобы он полностью был виден */
+    }
+
+    .edit_data {
+        margin-top: 20px;
+        font-size: 22px;
+    }
+
+    .registrationForm {
+        margin-top: 10px;
+        margin-block-end: 20px;
+        height: -webkit-fit-content;
+        width: -webkit-min-content;
+        margin: initial;
+        padding: 10px;
+    }
+
+}

@@ -50,6 +50,7 @@ input[type="email"]{
     border-radius: 20px;
     box-sizing: border-box;
     text-align: center;
+    font-size: 17px;
 }
 
 .checkbox-container {
@@ -70,15 +71,6 @@ button {
     position: absolute;
     bottom: 20px;
     right: 20px;
-    padding: 10px 20px;
-    color: white;
-    background-color: #007BFF;
-}
-
-.btn_calendar {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
     padding: 10px 20px;
     color: white;
     background-color: #007BFF;
@@ -146,16 +138,24 @@ p a:hover {
     margin-top: 150px;
 }
 
+.error-message {
+    color: red;
+}
+
 /* Медиа-запросы для мобильных устройств */
-@media (max-width: 600px) {
+@media (max-width: 400px) {
     h1 {
         font-size: 2em;
         margin-top: 100px;
     }
 
     form {
-        width: 95%;
+        width: 75%;
         margin-top: 75px;
+    }
+
+    .HomeForm {
+        margin-top: 70px;
     }
 
     input[type="text"],

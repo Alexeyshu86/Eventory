@@ -1,7 +1,6 @@
 /* Основные стили для страницы */
 body {
     font-family: Arial, sans-serif;
-    margin: 20px;
     background-color: #f4f4f4;
 }
 
@@ -15,10 +14,9 @@ h1 {
 
 /* Стили для таблицы */
 table {
-    width: 100%;
+    width: 95%;
     border-collapse: separate; /* Отключаем collapse, чтобы применить закругленные углы */
     border-spacing: 0; /* Убираем промежутки между ячейками */
-    margin-bottom: 20px;
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 10px; /* Закругляем края таблицы */

@@ -1,4 +1,4 @@
-{% extends 'my_calendar/shablon.html' %}
+{% extends 'main/layout.html' %}
 
 {% block content %}
     <h1>Календарь событий</h1>
@@ -43,6 +43,9 @@
         </tr>
     </table>
 
+    <a href="{% url 'cabinet' %}"><button type="submit" class="btn">Назад</button></a>
+
     <script src="{% static 'my_calendar/js/calendar.js' %}"></script>
+
 
 {% endblock %}

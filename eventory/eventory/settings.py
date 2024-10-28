@@ -44,13 +44,13 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    # 'django.middleware.security.SecurityMiddleware',
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    # 'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'eventory.urls'
@@ -132,9 +132,20 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# # Каталоги для поиска статических файлов
+# STATICFILES_DIRS = [
+#     BASE_DIR / 'main/static',  # Каталог для глобальной статики
+# ]
+#
+# # Папка для сборки статики при collectstatic (используется в продакшене)
+# STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'registration.CustomUser'
+#
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Удалять сессионную куку при закрытии браузера
+
