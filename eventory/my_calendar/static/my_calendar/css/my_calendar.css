@@ -10,6 +10,7 @@ h1 {
     color: #333;
     font-size: 2.5em;
     margin-bottom: 20px;
+    margin-top: 20px;
 }
 
 /* Стили для таблицы */
@@ -277,6 +278,7 @@ td:empty {
     body {
         margin: 1px;
         display: block; /* Вместо flex устанавливаем block */
+        background-position: left;
     }
 
     .table-container {

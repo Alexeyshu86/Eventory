@@ -1,10 +1,13 @@
 {% extends 'main/layout.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <!-- Подключаем уникальный CSS для главной страницы -->
+    <link rel="stylesheet" href="{% static 'my_calendar/css/my_calendar.css' %}">
+{% endblock %}
 
 {% block content %}
     <h1>Календарь событий</h1>
-
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'my_calendar/css/my_calendar.css' %}">
 
     <table id="mainTable">
         <tr>
