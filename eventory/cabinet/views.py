@@ -1,3 +1,7 @@
+from django.shortcuts import render, redirect, HttpResponse
+from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth import logout
+from registration.models import CustomUser, Interest
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
