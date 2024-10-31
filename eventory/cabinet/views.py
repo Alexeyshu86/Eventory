@@ -5,9 +5,9 @@ from registration.models import CustomUser, Interest
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
-from django.shortcuts import render
-from registration.models import CustomUser
-import logging
+from registration.models import CustomUser, Interest
+from django.contrib.auth.hashers import check_password
+from django.contrib.auth import logout
 
 
 @login_required
@@ -36,8 +36,9 @@ def update_password(old_password, new_password, user_id):
     if check_password(old_password, user.password):
         user.set_password(new_password)
         user.save()
+        return True
     else:
-        return HttpResponse('Введите правильный пароль')
+        return False
 
 
 def change_data(request):
@@ -46,7 +47,16 @@ def change_data(request):
     context = update_data(CustomUser, Interest, user.id)
 
     if request.method == 'GET':
-        return render(request, 'cabinet/change_data.html', context)
+        for key in list(request.session.keys()):
+            if 'errors_password' in key:
+                context['errors_password'] = request.session.pop(key, None)
+                break
+            elif 'change_success' in key:
+                context['change_success'] = request.session.pop(key, None)
+                break
+
+        return render(request, 'cabinet/change_data.html',
+                      context)
 
     elif request.method == 'POST':
         first_name = request.POST.get('name')
@@ -73,12 +83,18 @@ def change_data(request):
         old_password = request.POST.get('old_password')
         new_password = request.POST.get('new_password')
         if old_password and new_password:
-            update_password(old_password, new_password, user.id)
+            if update_password(old_password, new_password, user.id):
+                pass
+            else:
+                request.session['errors_password'] = 'Введите правильный пароль'
         elif old_password and new_password == '':
-            return HttpResponse('Введите новый пароль')
+            request.session['errors_password'] = 'Введите новый пароль'
+            return redirect('change_data')
         elif old_password == '' and new_password:
-            return HttpResponse('Введите старый пароль')
+            request.session['errors_password'] = 'Введите старый пароль'
+            return redirect('change_data')
 
+        request.session['change_success'] = 'Изменения сохранены'
         return redirect('change_data')
 
     else:

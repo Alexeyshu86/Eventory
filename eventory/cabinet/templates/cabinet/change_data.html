@@ -2,6 +2,12 @@
 
 {% block title %}Cabinet{% endblock %}
 {% load static %}
+
+{% block extra_css %}
+    <!-- Подключаем уникальный CSS для главной страницы -->
+    <link rel="stylesheet" href="{% static 'cabinet/css/change_data.css' %}">
+{% endblock %}
+
 {% block content %}
 
     <h1 class="edit_data">Изменить данные</h1>
@@ -34,6 +40,16 @@
                 {% endfor %}
             </div>
         </div>
+
+        {% if errors_password %}
+            <div class="error-message-change">
+                {{ errors_password }}
+            </div>
+        {% elif change_success %}
+            <div class="success-message-change">
+                {{ change_success }}
+            </div>
+        {% endif %}
 
         <a href="{% url 'cabinet' %}"><button type="submit" class="btn_register">Сохранить</button></a>
     </form>

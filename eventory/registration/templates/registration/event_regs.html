@@ -1,11 +1,19 @@
 {% extends 'main/layout.html' %}
-
+{% load static %}
 {% block title %}Event registration{% endblock %}
 
+{% block extra_css %}
+    <!-- Подключаем уникальный CSS для главной страницы -->
+
+<!--    <link rel="stylesheet" href="{% static 'registration/css/user_regs.css' %}">-->
+    <link rel="stylesheet" href="{% static 'main/css/events.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/interest_list.css' %}">
+    <link rel="stylesheet" href="{% static 'registration/css/event_regs.css' %}">
+{% endblock %}
 
 {% block content %}
 
-    <h1>Регистрация события</h1>
+    <h1 class="h_registration_event">Регистрация события</h1>
     <form class="EventForm" method="POST">
         {% csrf_token %}
 
@@ -37,6 +45,7 @@
 
         <button type="submit" class="btn_register">Создать</button>
     </form>
+
     <a href="{% url 'cabinet' %}"><button type="submit" class="btn">Назад</button></a>
 
 {% endblock %}

@@ -1,8 +1,13 @@
 {% extends 'main/layout.html' %}
 
 {% block title %}User registration{% endblock %}
-
 {% load static %}
+{% block extra_css %}
+    <!-- Подключаем уникальный CSS для главной страницы -->
+    <link rel="stylesheet" href="{% static 'registration/css/user_regs.css' %}">
+    <link rel="stylesheet" href="{% static 'main/css/interest_list.css' %}">
+{% endblock %}
+
 {% block content %}
 
     <h1 class="user_regs_h1">Регистрация</h1>
@@ -45,7 +50,6 @@
     </form>
 <!--    <a href="{% url 'home' %}"><button type="submit" class="btn">На главную</button></a>-->
 
-    <link rel="stylesheet" href="{% static 'registration/css/user_regs.css' %}">
 {% endblock %}
 
 <script>
